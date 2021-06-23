@@ -11,50 +11,57 @@ import Book from "../models/bookModel.js";
 
 export const books = async (args, req) => {
   const { ids } = args;
-  if (ids) {
-    return await bookLoader.loadMany(ids);
-  } else {
-    const books = await Book.find();
-    return books.map((book) => enrichBook(book));
-  }
+  // if (ids) {
+  // return await bookLoader.loadMany(ids);
+  // } else {
+  const books = await Book.find();
+  return books.map((book) => enrichBook(book));
+  // }
 };
 
 export const authors = async (args, req) => {
   const { ids } = args;
-  if (ids) {
-    return await authorLoader.loadMany(ids);
-  } else {
-    const authors = await Author.find();
-    return authors.map((author) => enrichAuthor(author));
-  }
+  // if (ids) {
+  // return await authorLoader.loadMany(ids);
+  // } else {
+  const authors = await Author.find();
+  return authors.map((author) => enrichAuthor(author));
+  // }
 };
 
 // populates links with documents
 
 const enrichBook = (book) => ({
   ...book._doc,
-  author: () => authorLoader.load(book.author),
+  // author: () => authorLoader.load(book.author),
+  author: () => Author.find({ id: book.author_id }),
 });
 
 const enrichAuthor = (author) => ({
   ...author._doc,
-  books: () => bookLoader.loadMany(author.books.map((id) => id.toString())),
+  // books: () => bookLoader.loadMany(author.books.map((id) => id.toString())),
+  books: () => findBooksByAuthor(author.id),
 });
 
 // batch loaders
 
-const bookLoader = new DataLoader(async (ids) => {
-  const books = await Book.find({ _id: { $in: ids } });
-  books.sort(
-    (a, b) => ids.indexOf(a._id.toString()) - ids.indexOf(b._id.toString())
-  );
-  return books.map(enrichBook);
-});
+// const bookLoader = new DataLoader(async (ids) => {
+//   const books = await Book.find({ _id: { $in: ids } });
+//   books.sort(
+//     (a, b) => ids.indexOf(a._id.toString()) - ids.indexOf(b._id.toString())
+//   );
+//   return books.map(enrichBook);
+// });
 
-const authorLoader = new DataLoader(async (ids) => {
-  const authors = await Author.find({ _id: { $in: ids } });
-  authors.sort(
-    (a, b) => ids.indexOf(a._id.toString()) - ids.indexOf(b._id.toString())
-  );
-  return authors.map(enrichBook);
-});
+// const authorLoader = new DataLoader(async (ids) => {
+//   const authors = await Author.find({ _id: { $in: ids } });
+//   authors.sort(
+//     (a, b) => ids.indexOf(a._id.toString()) - ids.indexOf(b._id.toString())
+//   );
+//   return authors.map(enrichAuthor);
+// });
+
+const findBooksByAuthor = async (authorId) => {
+  const books = await Book.find({ author_id: authorId });
+  return books.map(enrichBook);
+};

@@ -3,6 +3,7 @@
 ## rebuild network
 
 `docker-compose down`
+
 `docker-compose up -d --build`
 
 ## import data into database

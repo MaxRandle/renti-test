@@ -3,13 +3,8 @@ const { Schema, model } = pkg;
 
 const authorSchema = new Schema({
   title: { type: String, required: true },
+  slug: String,
   biography: String,
-  books: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Book",
-    },
-  ],
 });
 
 export default model("Author", authorSchema);
