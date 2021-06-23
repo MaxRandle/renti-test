@@ -13,5 +13,6 @@ services:
       - 27017:27017
     volumes:
       - mongodb:/data/db
+      - ./data:/data/import
 volumes:
   mongodb:

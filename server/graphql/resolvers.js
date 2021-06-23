@@ -4,14 +4,29 @@ import Book from "../models/bookModel.js";
 
 // resolvers
 
+// export const createBook = async (args, req) => {
+//   const book = new Book({ title: "the big" });
+//   return await book.save();
+// };
+
 export const books = async (args, req) => {
-  const books = await Book.find();
-  return books.map((book) => enrichBook(book));
+  const { ids } = args;
+  if (ids) {
+    return await bookLoader.loadMany(ids);
+  } else {
+    const books = await Book.find();
+    return books.map((book) => enrichBook(book));
+  }
 };
 
 export const authors = async (args, req) => {
-  const authors = await Author.find();
-  return authors.map((book) => enrichAuthor(book));
+  const { ids } = args;
+  if (ids) {
+    return await authorLoader.loadMany(ids);
+  } else {
+    const authors = await Author.find();
+    return authors.map((author) => enrichAuthor(author));
+  }
 };
 
 // populates links with documents

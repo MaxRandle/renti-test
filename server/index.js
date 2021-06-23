@@ -26,7 +26,6 @@ const app = express();
 
 // middleware
 app.use(cors());
-app.use(cors());
 app.use(json());
 
 // serve staic html
@@ -55,9 +54,13 @@ app.use(
 
 // database connect >> server start
 mongoose
-  .connect("mongodb://mongo:27017/docker-node-mongo", { useNewUrlParser: true })
+  .connect("mongodb://mongo:27017/docker-node-mongo", {
+    useNewUrlParser: true,
+  })
   .then(() => {
     console.log("MongoDB Connected");
     app.listen(PORT, () => console.log("server listening over port", PORT));
   })
   .catch((err) => console.log(err));
+
+// mongoimport --type csv -d docker-node-mongo -c books --headerline --drop book.csv

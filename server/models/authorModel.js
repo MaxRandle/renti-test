@@ -2,7 +2,7 @@ import pkg from "mongoose";
 const { Schema, model } = pkg;
 
 const authorSchema = new Schema({
-  name: { type: String, required: true },
+  title: { type: String, required: true },
   biography: String,
   books: [
     {
@@ -12,4 +12,4 @@ const authorSchema = new Schema({
   ],
 });
 
-export default model("author", authorSchema);
+export default model("Author", authorSchema);

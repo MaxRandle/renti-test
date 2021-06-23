@@ -12,17 +12,19 @@ const schema = buildSchema(`
 
     type Author {
         _id: ID!
-        name: String!
+        title: String!
         bigraphy: String!
         books: [Book!]!
     }
 
     type RootQuery {
-        books: [Book!]!
-        authors: [Author!]!
+        books(ids: [String!]): [Book!]!
+        authors(ids: [String!]): [Author!]!
     }
 
-    type RootMutation 
+    type RootMutation {
+        createBook: Book!
+    }
 
     schema {
         query: RootQuery
