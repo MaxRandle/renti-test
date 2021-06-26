@@ -2,8 +2,8 @@ import pkg from "mongoose";
 const { Schema, model } = pkg;
 
 const bookSchema = new Schema({
-  title: { type: String, required: true },
-  author_id: String,
+  title: String,
+  author_slug: String,
   overview: String,
   synopsis: String,
 });
