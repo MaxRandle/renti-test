@@ -1,14 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import {
+  CssBaseline,
+  createMuiTheme,
+  MuiThemeProvider,
+} from "@material-ui/core";
+import { createClient, Provider } from "urql";
+
+const client = createClient({
+  url: "http://localhost:5000/graphql",
+});
+
+const theme = createMuiTheme({
+  palette: {
+    type: "dark",
+  },
+});
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <MuiThemeProvider theme={theme}>
+    <Provider value={client}>
+      <CssBaseline />
+      <App />
+    </Provider>
+  </MuiThemeProvider>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -3,11 +3,13 @@ import { buildSchema } from "graphql";
 const schema = buildSchema(`
 
     type Book {
+        title_slug: String
         title: String
         author_slug: String
         overview: String
         synopsis: String
         author: Author
+        subjects: String
     }
 
     type Author {
@@ -18,8 +20,8 @@ const schema = buildSchema(`
     }
 
     type RootQuery {
-        books(ids: [String!]): [Book!]!
-        authors(ids: [String!]): [Author!]!
+        books(slug: String): [Book!]!
+        authors(slug: String): [Author!]!
         test: Author!
     }
 

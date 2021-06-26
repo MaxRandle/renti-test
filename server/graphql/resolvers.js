@@ -5,13 +5,25 @@ import Book from "../models/bookModel.js";
 // resolvers
 
 export const books = async (args, req) => {
-  const books = await Book.find();
-  return books.map((book) => enrichBook(book));
+  const { slug } = args;
+  if (slug) {
+    const books = await Book.find({ title_slug: slug });
+    return books.map((book) => enrichBook(book));
+  } else {
+    const books = await Book.find();
+    return books.map((book) => enrichBook(book));
+  }
 };
 
 export const authors = async (args, req) => {
-  const authors = await Author.find();
-  return authors.map((author) => enrichAuthor(author));
+  const { slug } = args;
+  if (slug) {
+    const authors = await Author.find({ slug: slug });
+    return authors.map((author) => enrichAuthor(author));
+  } else {
+    const authors = await Author.find();
+    return authors.map((author) => enrichAuthor(author));
+  }
 };
 
 // populates links with documents
