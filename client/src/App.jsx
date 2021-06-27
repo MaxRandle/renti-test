@@ -52,8 +52,6 @@ function App() {
           ))}
         </List>
       )}
-
-      {/* <Tree authors data={treeData} /> */}
     </Container>
   );
 }

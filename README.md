@@ -17,3 +17,9 @@
 `docker exec -it renti-test_node_1 bash`
 
 `docker exec -it renti-test_mongo_1 bash`
+
+## test FE
+
+`docker build -t rentifeimg .`
+
+`docker run -d -p 3000:80 --name rentifecon rentifeimg:latest`
