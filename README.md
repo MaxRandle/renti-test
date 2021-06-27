@@ -1,4 +1,12 @@
-# compose test
+# setup
+
+`docker-compose up -d --build`
+
+`docker exec renti-test_mongo_1 "mongoimport --type csv -d docker-node-mongo -c books --headerline --drop data/import/book.csv"`
+
+`docker exec renti-test_mongo_1 "mongoimport --type csv -d docker-node-mongo -c authors --headerline --drop data/import/author.csv"`
+
+# testing
 
 ## rebuild network
 
